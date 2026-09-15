@@ -1,6 +1,6 @@
 <p align="center"><img src="https://i.imgur.com/CBGh0Yx.png" /></p>
 
-# Evil Limiter — descriptive device names
+# EvilLimiter v1
 
 Customized copy of [bitbrute/evillimiter](https://github.com/bitbrute/evillimiter),
 with richer device identification. The original MIT license and attribution are retained.
@@ -27,8 +27,8 @@ Check out the open-source alternative [EvilLimiter for Windows](https://github.c
 ```bash
 sudo apt update
 sudo apt install git python3-venv python3-dev build-essential iproute2 iptables procps sudo
-git clone https://github.com/patrickdx/evillimiter-device-names.git
-cd evillimiter-device-names
+git clone https://github.com/patrickdx/evillimiter-v1.git
+cd evillimiter-v1
 python3 -m venv .venv
 .venv/bin/python -m pip install .
 sudo .venv/bin/evillimiter

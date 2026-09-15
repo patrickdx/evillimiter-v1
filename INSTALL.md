@@ -11,8 +11,8 @@ Clone the public repository (no GitHub sign-in required):
 ```sh
 sudo apt update
 sudo apt install git python3-venv python3-dev build-essential iproute2 iptables procps sudo
-git clone https://github.com/patrickdx/evillimiter-device-names.git
-cd evillimiter-device-names
+git clone https://github.com/patrickdx/evillimiter-v1.git
+cd evillimiter-v1
 python3 -m venv .venv
 .venv/bin/python -m pip install .
 sudo .venv/bin/evillimiter
