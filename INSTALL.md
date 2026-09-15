@@ -6,12 +6,14 @@ These changes have not been published to the upstream GitHub repository.
 
 ## Ubuntu / Debian
 
-Clone the public repository (no GitHub sign-in required):
+Clone this private repository using a GitHub account that has access
+(skip `gh auth login` if already signed in):
 
 ```sh
 sudo apt update
-sudo apt install git python3-venv python3-dev build-essential iproute2 iptables procps sudo
-git clone https://github.com/patrickdx/evillimiter-v1.git
+sudo apt install git gh python3-venv python3-dev build-essential iproute2 iptables procps sudo
+gh auth login
+gh repo clone patrickdx/evillimiter-v1
 cd evillimiter-v1
 python3 -m venv .venv
 .venv/bin/python -m pip install .

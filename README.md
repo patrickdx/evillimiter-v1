@@ -26,8 +26,9 @@ Check out the open-source alternative [EvilLimiter for Windows](https://github.c
 
 ```bash
 sudo apt update
-sudo apt install git python3-venv python3-dev build-essential iproute2 iptables procps sudo
-git clone https://github.com/patrickdx/evillimiter-v1.git
+sudo apt install git gh python3-venv python3-dev build-essential iproute2 iptables procps sudo
+gh auth login
+gh repo clone patrickdx/evillimiter-v1
 cd evillimiter-v1
 python3 -m venv .venv
 .venv/bin/python -m pip install .
@@ -35,8 +36,9 @@ sudo .venv/bin/evillimiter --version
 sudo .venv/bin/evillimiter
 ```
 
-This repository is public; no GitHub sign-in is required. If you already have
-the source directory, start at `python3 -m venv .venv` inside that directory.
+This repository is private. Sign in with a GitHub account that has access; skip
+`gh auth login` if already signed in. If you already have the source directory,
+start at `python3 -m venv .venv` inside that directory.
 
 At the EvilLimiter prompt, run:
 
