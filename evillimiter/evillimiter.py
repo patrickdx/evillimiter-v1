@@ -49,6 +49,8 @@ def parse_arguments():
     using argparse
     """
     parser = argparse.ArgumentParser(description=get_description())
+    parser.add_argument('--version', action='version',
+                        version='EvilLimiter v1 {} (device identification enabled)'.format(get_version()))
     parser.add_argument('-i', '--interface', help='network interface connected to the target network. automatically resolved if not specified.')
     parser.add_argument('-g', '--gateway-ip', dest='gateway_ip', help='default gateway ip address. automatically resolved if not specified.')
     parser.add_argument('-m', '--gateway-mac', dest='gateway_mac', help='gateway mac address. automatically resolved if not specified.')

@@ -15,6 +15,7 @@ git clone https://github.com/patrickdx/evillimiter-v1.git
 cd evillimiter-v1
 python3 -m venv .venv
 .venv/bin/python -m pip install .
+sudo .venv/bin/evillimiter --version
 sudo .venv/bin/evillimiter
 ```
 
@@ -41,9 +42,37 @@ From your cloned repository directory:
 ```sh
 git pull --ff-only
 .venv/bin/python -m pip install .
+sudo .venv/bin/evillimiter --version
+sudo .venv/bin/evillimiter
 ```
 
 If you installed from a ZIP, download the updated source and reinstall it instead.
+
+## Still seeing blank hostnames?
+
+Quit any running EvilLimiter session before updating. Pulling the source alone
+does not update a previously installed package, and `sudo evillimiter` may still
+launch the old system installation. Use the explicit `.venv` path shown above.
+
+The version check must print:
+
+```text
+EvilLimiter v1 1.5.1 (device identification enabled)
+```
+
+Then start a new session, run `scan`, and run `hosts`. The table should have a
+`Device / hostname` column. An unidentified device shows `Unknown device`, not an
+empty cell. The monitor and analysis views use the same fallback.
+
+If you want to confirm where Python loads the installed code from, run:
+
+```sh
+.venv/bin/python -m pip show evillimiter
+.venv/bin/python -c 'import evillimiter; print(evillimiter.__version__); print(evillimiter.__file__)'
+```
+
+Real names depend on what devices advertise and what the router resolves. A
+fallback label does not mean that the model or owner has been identified.
 
 The new dependency is `dnspython>=2.0`, installed automatically. An unused legacy
 `pkg_resources` import was also removed so startup does not require that obsolete

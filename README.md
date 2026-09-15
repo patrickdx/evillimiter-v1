@@ -31,6 +31,7 @@ git clone https://github.com/patrickdx/evillimiter-v1.git
 cd evillimiter-v1
 python3 -m venv .venv
 .venv/bin/python -m pip install .
+sudo .venv/bin/evillimiter --version
 sudo .venv/bin/evillimiter
 ```
 
@@ -46,6 +47,12 @@ hosts
 
 Your device list now includes descriptive names such as `Android-2 — TX6s`.
 See [INSTALL.md](INSTALL.md) for interface selection, updates, and tests.
+
+**Still seeing blanks?** Version `1.5.1` reports
+`EvilLimiter v1 1.5.1 (device identification enabled)` with `--version`.
+Follow the [update and installation checks](INSTALL.md#still-seeing-blank-hostnames)
+to ensure an older system installation is not being launched. After updating,
+restart the application and run `scan` again.
 
 ## Usage
 

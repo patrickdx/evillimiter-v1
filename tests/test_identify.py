@@ -232,6 +232,16 @@ class IdentificationTests(unittest.TestCase):
 
 
 class ScannerTests(unittest.TestCase):
+    def test_host_names_never_remain_blank(self):
+        for value in (None, '', '  ', '\n\t'):
+            with self.subTest(value=value):
+                host = Host(IP, MAC, value)
+                self.assertEqual(host.name, 'Unknown device')
+                host.name = 'Office PC'
+                self.assertEqual(host.name, 'Office PC')
+                host.name = value
+                self.assertEqual(host.name, 'Unknown device')
+
     def test_names_are_resolved_concurrently(self):
         scanner = HostScanner('eth0', [IP, '192.0.2.23'])
         rendezvous = threading.Barrier(2)

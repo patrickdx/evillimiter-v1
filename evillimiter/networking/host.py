@@ -11,6 +11,16 @@ class Host(object):
         self.blocked = False
         self.watched = False
 
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        # Keep every view (hosts, monitor, analyze, reconnects) nonblank,
+        # including hosts whose lookup returned only whitespace or None.
+        self._name = (str(value).strip() if value is not None else '') or 'Unknown device'
+
     def __eq__(self, other):
         return self.ip == other.ip
 
