@@ -6,21 +6,20 @@ These changes have not been published to the upstream GitHub repository.
 
 ## Ubuntu / Debian
 
-Clone this private repository with a GitHub account that has access:
+Clone the public repository (no GitHub sign-in required):
 
 ```sh
 sudo apt update
-sudo apt install git gh python3-venv python3-dev build-essential iproute2 iptables procps sudo
-gh auth login
-gh repo clone patrickdx/evillimiter-device-names
+sudo apt install git python3-venv python3-dev build-essential iproute2 iptables procps sudo
+git clone https://github.com/patrickdx/evillimiter-device-names.git
 cd evillimiter-device-names
 python3 -m venv .venv
 .venv/bin/python -m pip install .
 sudo .venv/bin/evillimiter
 ```
 
-Skip `gh auth login` if the GitHub CLI is already signed in. If you downloaded
-a ZIP instead, extract it and open a terminal in that directory, then start at
+If you downloaded a ZIP instead, extract it and open a terminal in that
+directory, then start at
 `python3 -m venv .venv`. Always install from this modified checkout; installing
 `evillimiter` by name from PyPI will not include these changes.
 

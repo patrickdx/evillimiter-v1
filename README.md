@@ -2,7 +2,7 @@
 
 # Evil Limiter — descriptive device names
 
-Private customized copy of [bitbrute/evillimiter](https://github.com/bitbrute/evillimiter),
+Customized copy of [bitbrute/evillimiter](https://github.com/bitbrute/evillimiter),
 with richer device identification. The original MIT license and attribution are retained.
 
 [![License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -21,24 +21,21 @@ Check out the open-source alternative [EvilLimiter for Windows](https://github.c
 
 - Linux (Ubuntu/Debian installation shown below)
 - Python 3.10 or newer recommended
-- Access to this private GitHub repository
 
 ## Installation (Ubuntu / Debian)
 
 ```bash
 sudo apt update
-sudo apt install git gh python3-venv python3-dev build-essential iproute2 iptables procps sudo
-gh auth login
-gh repo clone patrickdx/evillimiter-device-names
+sudo apt install git python3-venv python3-dev build-essential iproute2 iptables procps sudo
+git clone https://github.com/patrickdx/evillimiter-device-names.git
 cd evillimiter-device-names
 python3 -m venv .venv
 .venv/bin/python -m pip install .
 sudo .venv/bin/evillimiter
 ```
 
-Sign in with a GitHub account that has access to this private repository. Skip
-`gh auth login` if the GitHub CLI is already signed in. If you already have the
-source directory, start at `python3 -m venv .venv` inside that directory.
+This repository is public; no GitHub sign-in is required. If you already have
+the source directory, start at `python3 -m venv .venv` inside that directory.
 
 At the EvilLimiter prompt, run:
 
