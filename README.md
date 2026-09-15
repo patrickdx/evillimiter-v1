@@ -1,6 +1,9 @@
 <p align="center"><img src="https://i.imgur.com/CBGh0Yx.png" /></p>
 
-# Evil Limiter
+# Evil Limiter — descriptive device names
+
+Private customized copy of [bitbrute/evillimiter](https://github.com/bitbrute/evillimiter),
+with richer device identification. The original MIT license and attribution are retained.
 
 [![License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Compatibility](https://img.shields.io/badge/python-3-brightgreen.svg)](PROJECT)
@@ -15,26 +18,71 @@ A tool to monitor, analyze and limit the bandwidth (upload/download) of devices 
 Check out the open-source alternative [EvilLimiter for Windows](https://github.com/bitbrute/evillimiter-windows).
 
 ## Requirements
-- Linux distribution
-- Python 3 or greater
 
-Possibly missing python packages will be installed during the installation process.
+- Linux (Ubuntu/Debian installation shown below)
+- Python 3.10 or newer recommended
+- Access to this private GitHub repository
 
-## Installation
+## Installation (Ubuntu / Debian)
 
 ```bash
-git clone https://github.com/bitbrute/evillimiter.git
-cd evillimiter
-sudo python3 setup.py install
+sudo apt update
+sudo apt install git gh python3-venv python3-dev build-essential iproute2 iptables procps sudo
+gh auth login
+gh repo clone patrickdx/evillimiter-device-names
+cd evillimiter-device-names
+python3 -m venv .venv
+.venv/bin/python -m pip install .
+sudo .venv/bin/evillimiter
 ```
 
-Alternatively, you can download a desired version from the [Release page](https://github.com/bitbrute/evillimiter/releases).<br>
+Sign in with a GitHub account that has access to this private repository. Skip
+`gh auth login` if the GitHub CLI is already signed in. If you already have the
+source directory, start at `python3 -m venv .venv` inside that directory.
+
+At the EvilLimiter prompt, run:
+
+```text
+scan
+hosts
+```
+
+Your device list now includes descriptive names such as `Android-2 — TX6s`.
+See [INSTALL.md](INSTALL.md) for interface selection, updates, and tests.
 
 ## Usage
 
-Type ```evillimiter``` or ```python3 bin/evillimiter``` to run the tool.
+Run `sudo .venv/bin/evillimiter` from this checkout to use the modified version.
+To select an interface, use `sudo .venv/bin/evillimiter -i eth0` (replace `eth0`
+with your interface name).
 
 ```evillimiter``` will try to resolve required information (network interface, netmask, gateway address, ...) on its own, automatically.
+
+### Device names
+
+`scan` and `add` now fill the **Device / hostname** column using several sources:
+
+- Reverse DNS from the configured DNS servers.
+- Local mDNS/DNS-SD announcements, including friendly names and model information
+  from Google Cast, AirPlay, printers, and Android devices.
+- Windows NetBIOS workstation names when no name or model was found.
+- A manufacturer label from Scapy's local MAC-prefix database, or `Unknown device`
+  when the device cannot be identified. Manufacturer labels identify the network
+  hardware vendor, which is not necessarily the device's brand.
+
+For devices explicitly advertising a legacy ADB service, identification reads the
+initial Android connection greeting for the model, for example
+`Android-2 — TX6s`. It stops if authentication or TLS is required. It does not pair,
+authenticate, run commands, or read device files.
+
+Identification runs concurrently with host discovery, with a three-second lookup
+budget per responding device. Local probes use the selected network interface.
+The reconnect watcher retains existing names without repeating identification.
+Long labels wrap in the hosts table. Names and models are self-reported clues,
+not verified hardware identities; sleeping devices, multicast-only responders,
+client isolation, and disabled discovery services can still prevent identification.
+
+For installation of this modified copy, see [INSTALL.md](INSTALL.md).
 
 #### Command-Line Arguments
 

@@ -1,11 +1,9 @@
-import sys
-import socket
 from tqdm import tqdm
-from netaddr import IPAddress
 from scapy.all import sr1, ARP # pylint: disable=no-name-in-module
 from concurrent.futures import ThreadPoolExecutor
 
 from .host import Host
+from .identify import HostIdentifier
 from evillimiter.console.io import IO
         
 
@@ -17,15 +15,14 @@ class HostScanner(object):
         self.max_workers = 75   # max. amount of threads
         self.retries = 0        # ARP retry
         self.timeout = 2.5      # time in s to wait for an answer
+        self.identifier = HostIdentifier(interface)
 
     def scan(self, iprange=None):
-        self._resolve_names = True
-
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             hosts = []
             iprange = [str(x) for x in (self.iprange if iprange is None else iprange)]
             iterator = tqdm(
-                iterable=executor.map(self._sweep, iprange),
+                iterable=executor.map(self._discover, iprange),
                 total=len(iprange),
                 ncols=45,
                 bar_format='{percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}'
@@ -34,19 +31,18 @@ class HostScanner(object):
             try:
                 for host in iterator:
                     if host is not None:
-                        try:
-                            host_info = socket.gethostbyaddr(host.ip)
-                            name = '' if host_info is None else host_info[0]
-                            host.name = name
-                        except socket.herror:
-                            pass
-
                         hosts.append(host)
             except KeyboardInterrupt:
                 iterator.close()
                 IO.ok('aborted. waiting for shutdown...')
 
             return hosts
+
+    def _discover(self, ip):
+        host = self._sweep(ip)
+        if host is not None:
+            host.name = self.identifier.identify(host.ip, host.mac)
+        return host
 
     def scan_for_reconnects(self, hosts, iprange=None):
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:

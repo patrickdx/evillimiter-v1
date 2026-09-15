@@ -1,5 +1,5 @@
 import time
-import socket
+import textwrap
 import curses
 import netaddr
 import threading
@@ -148,7 +148,7 @@ class MainMenu(CommandMenu):
             '{}ID{}'.format(IO.Style.BRIGHT, IO.Style.RESET_ALL),
             '{}IP address{}'.format(IO.Style.BRIGHT, IO.Style.RESET_ALL),
             '{}MAC address{}'.format(IO.Style.BRIGHT, IO.Style.RESET_ALL),
-            '{}Hostname{}'.format(IO.Style.BRIGHT, IO.Style.RESET_ALL),
+            '{}Device / hostname{}'.format(IO.Style.BRIGHT, IO.Style.RESET_ALL),
             '{}Status{}'.format(IO.Style.BRIGHT, IO.Style.RESET_ALL)
         ]]
         
@@ -158,7 +158,7 @@ class MainMenu(CommandMenu):
                     '{}{}{}'.format(IO.Fore.LIGHTYELLOW_EX, self._get_host_id(host, lock=False), IO.Style.RESET_ALL),
                     host.ip,
                     host.mac,
-                    host.name,
+                    textwrap.fill(host.name or 'Unknown device', width=32),
                     host.pretty_status()
                 ])
 
@@ -244,12 +244,7 @@ class MainMenu(CommandMenu):
                 IO.error('unable to resolve mac address. specify manually (--mac).')
                 return
 
-        name = None
-        try:
-            host_info = socket.gethostbyaddr(ip)
-            name = None if host_info is None else host_info[0]
-        except socket.herror:
-            pass
+        name = self.host_scanner.identifier.identify(ip, mac)
 
         host = Host(ip, mac, name)
 

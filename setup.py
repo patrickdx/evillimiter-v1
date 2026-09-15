@@ -65,6 +65,7 @@ PYTHON_REQUIRES = '>= 3'
 ENTRY_POINTS = { 'console_scripts': ['evillimiter = evillimiter.evillimiter:run'] }
 
 INSTALL_REQUIRES = ['colorama',
+                    'dnspython>=2.0',
                     'netaddr',
                     'netifaces',
                     'tqdm',
